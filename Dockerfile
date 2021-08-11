@@ -43,4 +43,4 @@ ENV LC_TELEPHONE="C.UTF-8"
 ENV LC_MEASUREMENT="C.UTF-8"
 ENV LC_IDENTIFICATION="C.UTF-8"
 
-CMD systemctl --user enable --now emacs && tmux
+CMD stty erase \^H && systemctl --user enable --now emacs && tmux

@@ -21,8 +21,6 @@
       (list (format "%s %%S: %%j " (system-name))
             '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
-(normal-erase-is-backspace-mode 1)
-
 ;; install xcscope and set keybinds
 (require 'xcscope)
 (global-set-key "\C-cc" 'cscope-find-functions-calling-this-function)
