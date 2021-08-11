@@ -88,7 +88,7 @@
   :ensure t
   :init)
 
-;; install and use el-get
+;; install and use go-mode
 (use-package go-mode
   :ensure t
   :init)
