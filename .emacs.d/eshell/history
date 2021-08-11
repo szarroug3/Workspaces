@@ -1,0 +1,7 @@
+ds_shell
+~/work/scripts/ds_shell 
+cat ~/work/scripts/ds_shell 
+source /opt/goldengate3/activate
+cd ..
+./manage.py shell_plus
+source /opt/goldengate3/bin/activate
