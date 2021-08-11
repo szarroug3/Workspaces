@@ -135,5 +135,4 @@ alias kdeleteforce='kubectl delete --force --grace-period=0'
 alias ipython2='python2 -c "import IPython; IPython.terminal.ipapp.launch_new_instance()"'
 
 # devbox
-alias dbb='docker build -t devbox ~/devbox'
-alias db='docker run --rm -it -v $HOME/.ssh:/root/.ssh -v $PWD:/workspace -v $HOME/.zsh_history:/root/.zsh_history -v /var/run/docker.sock:/var/run/docker.sock -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN devbox'
+alias devbox='docker run --rm -it -v $HOME/.ssh:/root/.ssh -v $PWD:/workspace -v $HOME/.zsh_history:/root/.zsh_history -v /var/run/docker.sock:/var/run/docker.sock -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN devbox'
