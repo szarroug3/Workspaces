@@ -1,4 +1,4 @@
-FROM 657273346644.dkr.ecr.us-west-2.amazonaws.com/hpe-hcss/foundation
+FROM 657273346644.dkr.ecr.us-west-2.amazonaws.com/hpe-hcss/foundation-devenv
 
 RUN sudo apt upgrade -y
 RUN sudo apt install -y emacs tmux zsh fortune rxvt-unicode locate
