@@ -1,4 +1,4 @@
-FROM 657273346644.dkr.ecr.us-west-2.amazonaws.com/hpe-hcss/foundation-devenv
+FROM 657273346644.dkr.ecr.us-west-2.amazonaws.com/hpe-hcss/foundation-devenv:latest
 
 RUN sudo apt upgrade -y
 RUN sudo apt install -y emacs fortune locate rxvt-unicode silversearcher-ag tmux zsh
