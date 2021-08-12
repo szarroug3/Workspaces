@@ -1,7 +1,7 @@
 FROM 657273346644.dkr.ecr.us-west-2.amazonaws.com/hpe-hcss/foundation-devenv
 
 RUN sudo apt upgrade -y
-RUN sudo apt install -y emacs tmux zsh fortune rxvt-unicode locate
+RUN sudo apt install -y emacs fortune locate rxvt-unicode silversearcher-ag tmux zsh
 RUN sudo apt install -y systemctl
 RUN sudo apt autoremove -y
 
