@@ -1,5 +1,5 @@
 [user]
-	name = Samreen Zarroug
-	email = samreen.zarroug@hpe.com
+        name = Samreen Zarroug
+        email = samreen.zarroug@hpe.com
 [core]
-	excludesfile = /home/ubuntu/.gitignore
+	excludesfile = $HOME/.gitignore
