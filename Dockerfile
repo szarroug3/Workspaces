@@ -7,26 +7,26 @@ RUN sudo apt autoremove -y
 
 RUN sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
 
-COPY .gitignore /root/
-COPY .gitconfig /root/
-COPY .tmux.conf /root/
+COPY .gitignore $HOME
+COPY .gitconfig $HOME
+COPY .tmux.conf $HOME
 
-COPY terminfo-24bit.src .
-RUN tic -x -o /root/.terminfo terminfo-24bit.src
+COPY terminfo-24bit.src $HOME
+RUN tic -x -o $HOME/.terminfo terminfo-24bit.src
 RUN rm terminfo-24bit.src
 
-COPY .emacs /root/
-ADD .emacs.d /root/.emacs.d
+COPY .emacs .
+ADD .emacs.d .
 COPY emacs.service  /usr/lib/systemd/user/emacs.service
 
 RUN sudo updatedb
 
 RUN sudo chsh -s $(which zsh) $(whoami)
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-RUN rm -rf ${ZSH_CUSTOM:-/root/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-/root/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-COPY .zprofile /root/
-COPY .zshrc /root/
+RUN rm -rf ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+COPY .zprofile $HOME
+COPY .zshrc $HOME
 
 ENV TERM xterm-256color
 ENV LANG=C.UTF-8
