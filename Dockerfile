@@ -3,7 +3,6 @@ FROM 657273346644.dkr.ecr.us-west-2.amazonaws.com/hpe-hcss/foundation-devenv:lat
 RUN sudo apt upgrade -y
 RUN sudo apt install -y emacs fortune locate rxvt-unicode silversearcher-ag tmux zsh
 RUN sudo apt install -y systemctl
-RUN sudo apt autoremove -y
 
 RUN sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
 
@@ -42,5 +41,12 @@ ENV LC_ADDRESS="C.UTF-8"
 ENV LC_TELEPHONE="C.UTF-8"
 ENV LC_MEASUREMENT="C.UTF-8"
 ENV LC_IDENTIFICATION="C.UTF-8"
+
+# REMOVE WHEN TERRAFORM GETS ADDED TO FOUNDATION-DEVENV
+RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+RUN sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+RUN sudo apt update -y
+RUN sudo apt install terraform
+# STOP REMOVING HERE
 
 CMD stty erase \^H && systemctl --user enable --now emacs && tmux
