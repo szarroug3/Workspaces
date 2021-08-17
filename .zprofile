@@ -9,8 +9,8 @@ export GITHUB_TOKEN=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
 
 export TERM=xterm-24bits
 
-export EDITOR="emacsclient -t"
-export VISUAL="emacsclient -t"
+export EDITOR="emacs"
+export VISUAL="emacs"
 
 . "$HOME/.cargo/env"
 export PATH=/usr/local/bin:$PATH
