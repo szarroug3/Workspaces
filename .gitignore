@@ -1,4 +1,5 @@
-# emacs temporary file
+# emacs/vim temporary files
 \#*\#
 .\#*
 *~
+*.swp

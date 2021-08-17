@@ -12,8 +12,7 @@ export TERM=xterm-24bits
 export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -t"
 
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-eval $(pyenv init --path)
 . "$HOME/.cargo/env"
+export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$HOME/.local/bin:$PATH

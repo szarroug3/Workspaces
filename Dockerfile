@@ -1,8 +1,8 @@
-FROM 657273346644.dkr.ecr.us-west-2.amazonaws.com/hpe-hcss/foundation-devenv:latest
+ARG IMAGE=657273346644.dkr.ecr.us-west-2.amazonaws.com/hpe-hcss/foundation-devenv:latest
+FROM ${IMAGE}
 
 RUN sudo apt upgrade -y
 RUN sudo apt install -y emacs fortune locate rxvt-unicode silversearcher-ag tmux zsh
-RUN sudo apt install -y systemctl
 
 RUN sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
 
@@ -15,8 +15,7 @@ RUN tic -x -o $HOME/.terminfo terminfo-24bit.src
 RUN rm terminfo-24bit.src
 
 COPY .emacs .
-ADD .emacs.d .
-COPY emacs.service  /usr/lib/systemd/user/emacs.service
+ADD .emacs.d .emacs.d
 
 RUN sudo updatedb
 
@@ -43,10 +42,11 @@ ENV LC_MEASUREMENT="C.UTF-8"
 ENV LC_IDENTIFICATION="C.UTF-8"
 
 # REMOVE WHEN TERRAFORM GETS ADDED TO FOUNDATION-DEVENV
+RUN sudo apt install -y software-properties-common
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-RUN sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+RUN sudo add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 RUN sudo apt update -y
-RUN sudo apt install terraform
+RUN sudo apt install -y terraform
 # STOP REMOVING HERE
 
-CMD stty erase \^H && systemctl --user enable --now emacs && tmux
+CMD stty erase \^H && tmux
