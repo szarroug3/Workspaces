@@ -41,12 +41,4 @@ ENV LC_TELEPHONE="C.UTF-8"
 ENV LC_MEASUREMENT="C.UTF-8"
 ENV LC_IDENTIFICATION="C.UTF-8"
 
-# REMOVE WHEN TERRAFORM GETS ADDED TO FOUNDATION-DEVENV
-RUN sudo apt install -y software-properties-common
-RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-RUN sudo add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-RUN sudo apt update -y
-RUN sudo apt install -y terraform
-# STOP REMOVING HERE
-
 CMD stty erase \^H && tmux
