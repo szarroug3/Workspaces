@@ -135,7 +135,7 @@ alias kdeleteforce='kubectl delete --force --grace-period=0'
 alias ipython2='python2 -c "import IPython; IPython.terminal.ipapp.launch_new_instance()"'
 
 # devbox
-alias dbb='docker build --pull -t devbox ~/work/git/sandbox/devbox'
-alias dbbl='docker build --build-arg IMAGE=foundation-devenv-local -t devbox ~/work/git/sandbox/devbox'
-alias dbbv='docker build --build-arg IMAGE=$IMAGE -t devbox ~/work/git/sandbox/devbox'
+alias dbb='docker build --pull -t devbox ~/sandbox/devbox'
+alias dbbl='docker build --build-arg IMAGE=foundation-devenv-local -t devbox ~/sandbox/devbox'
+alias dbbv='docker build --build-arg IMAGE=$IMAGE -t devbox ~/sandbox/devbox'
 alias db='docker run --rm -it -v $HOME/.ssh:$HOME/.ssh -v $HOME/.docker:$HOME/.docker -v $HOME/.aws/credentials:$HOME/.aws/credentials -v $HOME/.zsh_history:$HOME/.zsh_history -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:$PWD --workdir $PWD -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN -e REAL_HOME=$HOME devbox'
