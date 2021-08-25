@@ -120,6 +120,11 @@ alias gcane="git commit --amend --no-edit"
 alias gcfb="git cat-file blob"
 alias grlp="git reflog --pretty=fuller"
 
+# hub aliases
+alias hpc='hub pr checkout'
+alias hpl='hub pr list'
+alias hpp='hub pull-request -p'
+
 # random things
 alias ccat='pygmentize -O style=monokai,linenos=1'
 # alias emacs="emacsclient -nw -c"
