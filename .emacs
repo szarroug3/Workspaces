@@ -17,9 +17,23 @@
 (eval-when-compile
   (require 'use-package))
 
+;; show directory in title
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
             '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
+;; show directory in mode-line-buffer
+(setq-default mode-line-buffer-identification
+              (let ((orig  (car mode-line-buffer-identification)))
+                `(:eval (cons (concat ,orig (abbreviate-file-name default-directory))
+                              (cdr mode-line-buffer-identification)))))
+
+;; make PATH in emacs match PATH from env
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 
 ;; install xcscope and set keybinds
 (require 'xcscope)
@@ -67,12 +81,12 @@
     "w" 'whitespace-cleanup))
 
 (use-package evil-collection
-  :init (evil-collection-init))
+  :init
+  (evil-collection-init))
 
 ;; install magit
 (use-package magit
-  :ensure t
-  :init)
+  :ensure t)
 
 ;; install and use vdiff
 (use-package vdiff
@@ -83,18 +97,17 @@
 
 ;; install and use itail
 (use-package itail
-  :ensure t
-  :init)
+  :ensure t)
 
 ;; install and use go-mode
 (use-package go-mode
   :ensure t
-  :init)
+  :config
+  (add-hook 'before-save-hook #'gofmt-before-save))
 
 ;; install and use ag
 (use-package ag
-  :ensure t
-  :init)
+  :ensure t)
 
 ;; install and use KeyChord
 (use-package use-package-chords
@@ -242,7 +255,7 @@ This functions should be added to the hooks of major modes for programming."
  '(helm-minibuffer-history-key "M-p")
  '(package-selected-packages
    (quote
-    (undo-fu yasnippet jedi ag undo-fu-session magit-p4 evil-collection vdiff whitespace-cleanup-mode itail xcscope flycheck evil-magit magit git highlight-parentheses spacemacs use-package-chords buffer-move evil-leader linum-relative KeyChord helm Helm use-package evil-visual-mark-mode))))
+    (exec-path-from-shell undo-fu yasnippet jedi ag undo-fu-session magit-p4 evil-collection vdiff whitespace-cleanup-mode itail xcscope flycheck evil-magit magit git highlight-parentheses spacemacs use-package-chords buffer-move evil-leader linum-relative KeyChord helm Helm use-package evil-visual-mark-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
