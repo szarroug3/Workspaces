@@ -16,6 +16,9 @@ RUN rm terminfo-24bit.src
 
 COPY .emacs .
 ADD .emacs.d .emacs.d
+COPY emacs.service /usr/lib/systemd/user/emacs.service
+RUN sudo wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -O /usr/local/bin/systemctl
+RUN sudo chmod +x /usr/local/bin/systemctl
 
 RUN sudo updatedb
 
@@ -41,4 +44,4 @@ ENV LC_TELEPHONE="C.UTF-8"
 ENV LC_MEASUREMENT="C.UTF-8"
 ENV LC_IDENTIFICATION="C.UTF-8"
 
-CMD stty erase \^H && tmux
+CMD systemctl --user enable --now emacs && stty erase \^H && tmux

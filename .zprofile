@@ -7,8 +7,8 @@ export OBERON=/home/ubuntu/work/git/hpe/cluster-oberon/kubeconfig.yaml
 
 export TERM=xterm-24bits
 
-export EDITOR="emacs"
-export VISUAL="emacs"
+export EDITOR="emacsclient -t"
+export VISUAL="emacsclient -t"
 
 . "$HOME/.cargo/env"
 export PATH=/usr/local/bin:$PATH
