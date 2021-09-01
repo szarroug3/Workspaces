@@ -114,6 +114,9 @@ alias agi='ag -S --color --color-line-number=95 --color-path=94 --color-match=31
 alias agit='ag -S --color --color-line-number=95 --color-path=94 --color-match=31 --ignore="test"'
 alias agip='ag -S --color --color-line-number=95 --color-path=94 --color-match=31 -G ".py"'
 
+# docker aliases
+alias drma='docker rm $(docker stop $(docker ps -aq))'
+
 # git aliases
 alias glfp="git log --first-parent --no-merges"
 alias gcane="git commit --amend --no-edit"
@@ -127,19 +130,19 @@ alias hpl='hub pr list'
 alias hpp='hub pull-request -p'
 alias hppm='hub pull-request -p -m "$(git log --format=%B -n 1)"'
 
-# random things
-alias ccat='pygmentize -O style=monokai,linenos=1'
-alias emacs="emacsclient -nw -c"
-alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
-alias svim="sudo -E vim"
+# IPython for specific version of python
+alias ipython2='python2 -c "import IPython; IPython.terminal.ipapp.launch_new_instance()"'
 
 # kubectl
 alias kd='kubectl describe'
 alias kg='kubectl get'
 alias kdeleteforce='kubectl delete --force --grace-period=0'
 
-# IPython for specific version of python
-alias ipython2='python2 -c "import IPython; IPython.terminal.ipapp.launch_new_instance()"'
+# random things
+alias ccat='pygmentize -O style=monokai,linenos=1'
+alias emacs="emacsclient -nw -c"
+alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
+alias svim="sudo -E vim"
 
 # devbox
 alias dbb='docker build --pull -t devbox ~/sandbox/devbox'
