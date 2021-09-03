@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Copyright 2021 Hewlett Packard Enterprise Development LP
+
+set -eo pipefail
+
+PARENT_DIR=${HPE_CLONE_DIR:-~/hpe}
+
+function clone_all() {
+  local all_repo=$(ghapi /orgs/hpe-hcss/repos | jq -r '.[] | select(.archived == false) | (.name)')
+  local IFS=$'\n'
+  mkdir -p $PARENT_DIR
+  for r in $all_repo; do
+    unset IFS
+    local dir=$PARENT_DIR/$r
+    if [ ! -d "$dir" ]; then
+        git clone git@github.com:hpe-hcss/$r $dir &
+    fi
+  done
+  wait
+}
+
+function ghapi {
+  url=${1:?}
+  ((page=1))
+  show="[]"
+  while [[ true ]]; do
+    out=$(eval curl -sS -H \"Accept: application/vnd.github.v3+json\" -H \"Authorization: token $GITHUB_TOKEN\" https://api.github.com$url?page=$page)
+    empty=$(jq -r '.[]' <<< $out)
+    ((page += 1))
+    if [[ "$empty" == "" ]]; then
+      break
+    fi
+    show=$(echo $show $out | jq -s '. | flatten')
+  done
+  jq '.' <<< $show
+}
+
+clone_all

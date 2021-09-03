@@ -1,8 +1,9 @@
 ARG IMAGE=657273346644.dkr.ecr.us-west-2.amazonaws.com/hpe-hcss/foundation-devenv:latest
 FROM ${IMAGE}
 
+RUN yes | sudo unminimize
 RUN sudo apt upgrade -y
-RUN sudo apt install -y emacs fortune locate rxvt-unicode silversearcher-ag tmux zsh
+RUN sudo apt install -y emacs fortune locate man-db rxvt-unicode silversearcher-ag tmux zsh
 
 RUN sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
 

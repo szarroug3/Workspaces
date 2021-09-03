@@ -14,5 +14,6 @@ export VISUAL="emacsclient -t"
 export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/bin:$PATH
 
 source ~/.tokens
