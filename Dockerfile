@@ -7,8 +7,8 @@ RUN sudo apt install -y emacs fortune locate man-db rxvt-unicode silversearcher-
 
 RUN sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
 
-RUN pip2 install ipython lxml
-RUN pip3 install ipython lxml
+RUN pip2 install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 COPY .gitignore $HOME
 COPY .gitconfig $HOME
