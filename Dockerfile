@@ -7,8 +7,10 @@ RUN sudo apt install -y emacs fortune locate man-db rxvt-unicode silversearcher-
 
 RUN sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
 
+COPY requirements.txt .
 RUN pip2 install -r requirements.txt
 RUN pip3 install -r requirements.txt
+RUN rm requirements.txt
 
 COPY .gitignore $HOME
 COPY .gitconfig $HOME
