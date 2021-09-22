@@ -15,6 +15,7 @@ RUN rm requirements.txt
 COPY .gitignore $HOME
 COPY .gitconfig $HOME
 COPY .tmux.conf $HOME
+ADD bin $HOME
 
 COPY terminfo-24bit.src $HOME
 RUN tic -x -o $HOME/.terminfo terminfo-24bit.src
