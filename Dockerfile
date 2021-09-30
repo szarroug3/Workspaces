@@ -21,11 +21,8 @@ COPY terminfo-24bit.src $HOME
 RUN tic -x -o $HOME/.terminfo terminfo-24bit.src
 RUN rm terminfo-24bit.src
 
-COPY .emacs .
-ADD .emacs.d .emacs.d
-COPY emacs.service /usr/lib/systemd/user/emacs.service
-RUN sudo wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -O /usr/local/bin/systemctl
-RUN sudo chmod +x /usr/local/bin/systemctl
+RUN curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
+RUN chmod +x ~/.local/bin/rust-analyzer
 
 RUN sudo updatedb
 
@@ -50,5 +47,11 @@ ENV LC_ADDRESS="C.UTF-8"
 ENV LC_TELEPHONE="C.UTF-8"
 ENV LC_MEASUREMENT="C.UTF-8"
 ENV LC_IDENTIFICATION="C.UTF-8"
+
+COPY .emacs .
+ADD .emacs.d .emacs.d
+COPY emacs.service /usr/lib/systemd/user/emacs.service
+RUN sudo wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -O /usr/local/bin/systemctl
+RUN sudo chmod +x /usr/local/bin/systemctl
 
 CMD systemctl --user enable --now emacs && stty erase \^H && tmux
