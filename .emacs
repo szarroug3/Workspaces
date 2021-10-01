@@ -124,7 +124,8 @@
 ;; install and use rust-mode
 (use-package rust-mode
   :ensure t
-  :hook (rust-mode . lsp))
+  :hook (rust-mode . lsp)
+  :init (setq rust-format-on-save t))
 
 ;; install and setup cargo
 (use-package cargo
