@@ -7,6 +7,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 
 (setq package-enable-at-startup nil)
+(setq use-package-always-ensure t)
 (package-initialize)
 
 ;; install use-package
@@ -94,10 +95,45 @@
   :init
   (evil-define-key 'normal vdiff-mode-map "," vdiff-mode-prefix-map))
 
-
 ;; install and use itail
 (use-package itail
   :ensure t)
+
+;; install and use flycheck
+(use-package flycheck
+  :hook (prog-mode . flycheck-mode))
+
+;; install and use company
+(use-package company
+  :hook (prog-mode . company-mode)
+  :config (setq company-tooltip-align-annotations t)
+          (setq company-minimum-prefix-length 1))
+
+;; install and use lsp-mode
+(use-package lsp-mode
+  :commands lsp
+  :config (require 'lsp-clients)
+  :init (setq lsp-rust-analyzer-server-display-inlay-hints t))
+
+(use-package lsp-ui)
+
+;; install and use toml-mode
+(use-package toml-mode
+  :ensure t)
+
+;; install and use rust-mode
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . lsp))
+
+;; install and setup cargo
+(use-package cargo
+  :ensure t
+  :hook (rust-mode . cargo-minor-mode))
+
+;;install and use flycheck-rust
+(use-package flycheck-rust
+  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; install and use go-mode
 (use-package go-mode
@@ -132,16 +168,6 @@
   (helm-linum-relative-mode 1)
   (setq linum-relative-current-symbol "")
   (setq linum-relative-backend 'display-line-numbers-mode))
-
-;; install and use flycheck
-(use-package flycheck
-  :ensure t
-  :init
-  (setq-default flycheck-disabled-checkers '(python-flake8 go-vet go-build))
-  (setq flycheck-pylintrc "~/.pylintrc")
-  (setq flycheck-python-pylint-executable "/usr/local/bin/python2")
-  (setq flycheck-python-pycompile-executable "/usr/local/bin/python2")
-  (add-hook 'after-init-hook #'global-flycheck-mode))
 
 ;; install and use jedi
 (use-package jedi
@@ -255,7 +281,7 @@ This functions should be added to the hooks of major modes for programming."
  '(helm-minibuffer-history-key "M-p")
  '(package-selected-packages
    (quote
-    (exec-path-from-shell undo-fu yasnippet jedi ag undo-fu-session magit-p4 evil-collection vdiff whitespace-cleanup-mode itail xcscope flycheck evil-magit magit git highlight-parentheses spacemacs use-package-chords buffer-move evil-leader linum-relative KeyChord helm Helm use-package evil-visual-mark-mode))))
+    (flycheck-rust exec-path-from-shell undo-fu yasnippet jedi ag undo-fu-session magit-p4 evil-collection vdiff whitespace-cleanup-mode itail xcscope evil-magit magit git highlight-parentheses spacemacs use-package-chords buffer-move evil-leader linum-relative KeyChord helm Helm use-package evil-visual-mark-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
