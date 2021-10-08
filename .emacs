@@ -18,6 +18,12 @@
 (eval-when-compile
   (require 'use-package))
 
+;; make PATH in emacs match PATH from env
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (daemonp) (exec-path-from-shell-initialize)))
+
 ;; show directory in title
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
@@ -28,13 +34,6 @@
               (let ((orig  (car mode-line-buffer-identification)))
                 `(:eval (cons (concat ,orig (abbreviate-file-name default-directory))
                               (cdr mode-line-buffer-identification)))))
-
-;; make PATH in emacs match PATH from env
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
 
 ;; install xcscope and set keybinds
 (require 'xcscope)
