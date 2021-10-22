@@ -117,6 +117,9 @@ alias agip='ag -S --color --color-line-number=95 --color-path=94 --color-match=3
 # docker aliases
 alias drma='docker rm $(docker stop $(docker ps -aq))'
 
+# gh aliases
+alias gpcf='gh pr checkout -f'
+
 # git aliases
 alias glfp="git log --first-parent --no-merges"
 alias gcane="git commit --amend --no-edit"
