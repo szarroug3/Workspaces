@@ -48,6 +48,9 @@ ENV LC_TELEPHONE="C.UTF-8"
 ENV LC_MEASUREMENT="C.UTF-8"
 ENV LC_IDENTIFICATION="C.UTF-8"
 
+COPY .vimrc .
+ADD .vim .vim
+
 COPY .emacs .
 ADD .emacs.d .emacs.d
 COPY emacs.service /usr/lib/systemd/user/emacs.service
