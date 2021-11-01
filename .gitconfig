@@ -2,4 +2,4 @@
         name = Samreen Zarroug
         email = samreen.zarroug@hpe.com
 [core]
-	excludesfile = ~/.gitignore
+        excludesfile = ~/.gitignore

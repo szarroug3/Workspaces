@@ -1,3 +1,5 @@
+export DOCKER_BUILDKIT=1
+
 export DESPINA=/home/ubuntu/work/git/hpe/cluster-despina/kubeconfig.yaml
 export NESO=/home/ubuntu/work/git/hpe/cluster-neso/kubeconfig.yaml
 export OBERON=/home/ubuntu/work/git/hpe/cluster-oberon/kubeconfig.yaml

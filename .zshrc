@@ -109,10 +109,10 @@ bindkey '^[l' sebpane-right
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # ag aliases
-alias ag='ag --color --color-line-number=95 --color-path=94 --color-match=31'
-alias agi='ag -S --color --color-line-number=95 --color-path=94 --color-match=31'
-alias agit='ag -S --color --color-line-number=95 --color-path=94 --color-match=31 --ignore="test"'
-alias agip='ag -S --color --color-line-number=95 --color-path=94 --color-match=31 -G ".py"'
+alias ag='ag --color --color-line-number=95 --color-path=94 --color-match=31 --hidden'
+alias agi='ag -S --color --color-line-number=95 --color-path=94 --color-match=31 --hidden'
+alias agit='ag -S --color --color-line-number=95 --color-path=94 --color-match=31 --hidden --ignore="test"'
+alias agip='ag -S --color --color-line-number=95 --color-path=94 --color-match=31 --hidden -G ".py"'
 
 # docker aliases
 alias drma='docker rm $(docker stop $(docker ps -aq))'
