@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+usage="$(basename "$0") [-h] [-f FILES] [-b BUILD]
+Rerun a build everytime a file gets changed in the project.
+    -h  show this help text
+    -f  the files argument send to the find command
+    -b  the build command"
+
+options=':hf:b:'
+while getopts $options option; do
+    case "$option" in
+        h) echo "$usage"; exit;;
+        f) FILES=$OPTARG;;
+        b) BUILD=$OPTARG;;
+        :) printf "Error: missing argument for -%s\n" "$OPTARG" >&2; echo "$usage" >&2; exit 1;;
+        \?) printf "Error: illegal option: -%s\n" "$OPTARG" >&2; echo "$usage" >&2; exit 1;;
+    esac
+done
+
+# mandatory arguments
+if [[ -z "$FILES" ]] || [[ -z "$BUILD" ]]; then
+    echo "Error: arguments -f and -b must be provided"
+    echo "$usage" >&2; exit 1
+fi
+
+while sleep 1; do
+    find . -name "$FILES" | entr -d $BUILD
+done

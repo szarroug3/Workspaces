@@ -3,7 +3,7 @@ FROM ${IMAGE}
 
 RUN yes | sudo unminimize
 RUN sudo apt upgrade -y
-RUN sudo apt install -y emacs fortune locate man-db rxvt-unicode silversearcher-ag tmux zsh
+RUN sudo apt install -y emacs entr fortune locate man-db rxvt-unicode silversearcher-ag tmux zsh
 
 RUN sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
 
@@ -15,7 +15,7 @@ RUN rm requirements.txt
 COPY .gitignore $HOME
 COPY .gitconfig $HOME
 COPY .tmux.conf $HOME
-ADD bin $HOME
+COPY bin $HOME/bin/
 
 COPY terminfo-24bit.src $HOME
 RUN tic -x -o $HOME/.terminfo terminfo-24bit.src
@@ -49,10 +49,10 @@ ENV LC_MEASUREMENT="C.UTF-8"
 ENV LC_IDENTIFICATION="C.UTF-8"
 
 COPY .vimrc .
-ADD .vim .vim
+COPY .vim $HOME/.vim/
 
 COPY .emacs .
-ADD .emacs.d .emacs.d
+COPY .emacs.d .emacs.d
 COPY emacs.service /usr/lib/systemd/user/emacs.service
 RUN sudo wget https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py -O /usr/local/bin/systemctl
 RUN sudo chmod +x /usr/local/bin/systemctl
