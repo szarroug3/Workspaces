@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Copyright 2021 Hewlett Packard Enterprise Development LP
+
+PARENT_DIR=${HPE_CLONE_DIR:-~/hpe}
+
+find $PARENT_DIR -mindepth 1 -maxdepth 1 -type d | while read dir; do
+    cd "$dir"
+    echo $PWD
+    git stash clear
+    git reset --hard HEAD
+    for branch_name in master main; do
+        git fetch origin $branch_name || continue
+        git checkout origin/$branch_name
+        git branch -D $branch_name
+        git checkout -b $branch_name
+    done
+done
