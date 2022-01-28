@@ -1,4 +1,0 @@
-source /opt/goldengate3/bin/activate
-cd ~/work/git/bti-nextgen/datastore
-./manage.py runserver $@
-

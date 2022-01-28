@@ -143,7 +143,7 @@ alias kdeleteforce='kubectl delete --force --grace-period=0'
 
 # random things
 alias ccat='pygmentize -O style=monokai,linenos=1'
-alias emacs="emacsclient -nw -c"
+alias emacsc="emacsclient -nw -c"
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias svim="sudo -E vim"
 
