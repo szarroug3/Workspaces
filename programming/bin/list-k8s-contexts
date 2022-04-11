@@ -1,0 +1,1 @@
+grep '^- name: ' ~/.kube/config | awk '{print $3}'

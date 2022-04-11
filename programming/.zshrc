@@ -152,3 +152,7 @@ alias dbb='docker build --pull -t devbox ~/sandbox/devbox'
 alias dbbl='docker build --build-arg IMAGE=foundation-devenv-local -t devbox ~/sandbox/devbox'
 alias dbbv='docker build --build-arg IMAGE=$IMAGE -t devbox ~/sandbox/devbox'
 alias db='docker run --rm -it -v $HOME/.tokens:$HOME/.tokens -v $HOME/.ssh:$HOME/.ssh -v $HOME/.docker:$HOME/.docker -v $HOME/.aws/credentials:$HOME/.aws/credentials -v $HOME/.zsh_history:$HOME/.zsh_history -v $HOME/bin:$HOME/bin -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:$PWD --workdir $PWD -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e GITHUB_TOKEN -e REAL_HOME=$HOME -v /sys/fs/cgroup:/sys/fs/cgroup:ro devbox'
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
