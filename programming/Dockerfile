@@ -13,7 +13,6 @@ RUN pip3 install -r requirements.txt
 RUN rm requirements.txt
 
 COPY .gitignore $HOME
-COPY .gitconfig $HOME
 COPY .tmux.conf $HOME
 COPY bin $HOME/bin/
 
@@ -21,16 +20,12 @@ COPY terminfo-24bit.src $HOME
 RUN tic -x -o $HOME/.terminfo terminfo-24bit.src
 RUN rm terminfo-24bit.src
 
-RUN curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
-RUN chmod +x ~/.local/bin/rust-analyzer
-
 RUN sudo updatedb
 
 RUN sudo chsh -s $(which zsh) $(whoami)
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN rm -rf ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-COPY .zprofile $HOME
 COPY .zshrc $HOME
 
 ENV TERM xterm-256color
@@ -50,6 +45,7 @@ ENV LC_IDENTIFICATION="C.UTF-8"
 
 COPY .vimrc .
 COPY .vim $HOME/.vim/
+COPY init.vim $HOME/.config/nvim/init.vim
 
 COPY .emacs .
 COPY .emacs.d .emacs.d

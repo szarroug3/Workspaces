@@ -1,5 +1,11 @@
-[user]
-        name = Samreen Zarroug
-        email = samreen.zarroug@hpe.com
+[includeIf "gitdir:~/Git/personal/"]
+	path = ~/.gitconfig-personal
+[includeIf "gitdir:~/Git/work/"]
+	path = ~/.gitconfig-work
 [core]
-        excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
+
+[init]
+	templatedir = /Users/samreenzarroug/.git-template
+[credential]
+	helper = cache --timeout=600

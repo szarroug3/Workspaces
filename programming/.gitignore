@@ -2,5 +2,8 @@
 \#*\#
 .\#*
 *~
+*~
 *.swp
 .idea
+.DS_Store
+vendor/
