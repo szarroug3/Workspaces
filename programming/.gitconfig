@@ -9,3 +9,6 @@
 	templatedir = /Users/samreenzarroug/.git-template
 [credential]
 	helper = cache --timeout=600
+[user]
+	name = Samreen Zarroug
+	email = samreen.zarroug@thoughtworks.com

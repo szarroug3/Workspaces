@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/Users/samreenzarroug/Git/work/VA/va-virtual-agent/skills/va_claims_bot'
+let g:netrw_dirhist_6='/Users/samreenzarroug/Git/work/VA/va-virtual-agent/skills/va_boilerplate_bot'
+let g:netrw_dirhist_5='/Users/samreenzarroug/Git/work/VA/va-virtual-agent/skills/va_boilerplate_bot/deploymentTemplates/deployUseExistResourceGroup'
+let g:netrw_dirhist_4='/Users/samreenzarroug/Git/work/VA/va-virtual-agent/skills/va_boilerplate_bot/deploymentTemplates'
+let g:netrw_dirhist_3='/Users/samreenzarroug/Git/work/VA/va-virtual-agent/skills/va_claims_bot'
+let g:netrw_dirhist_2='/Users/samreenzarroug/Git/work/VA/va-virtual-agent/skills/va_boilerplate_bot'
+let g:netrw_dirhist_1='/Users/samreenzarroug/.config'
