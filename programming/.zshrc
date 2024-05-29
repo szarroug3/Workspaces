@@ -16,9 +16,9 @@ autoload -Uz compinit && compinit
 antidote load $HOME/.zsh_plugins.txt
 
 # zsh-syntax-highlighting options
-ZSH_HIGHLIGHT_STYLES[path]='fg=black'
+ZSH_HIGHLIGHT_STYLES[path]='fg=white'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=green'
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=black'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=white'
 
 # zsh-autosuggestions options
 COMPLETION_WAITING_DOTS="true"
