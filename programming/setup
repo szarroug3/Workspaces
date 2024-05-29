@@ -1,0 +1,12 @@
+# config files
+ln -sf $PWD/.gitconfig $HOME/.gitconfig
+ln -sf $PWD/.gitconfig-personal $HOME/.gitconfig-personal
+ln -sf $PWD/.gitconfig-work $HOME/.gitconfig-work
+ln -sf $PWD/.gitignore $HOME/.gitignore
+ln -sf $PWD/.tmux.conf $HOME/.tmux.conf
+ln -sf $PWD/.vimrc $HOME/.vimrc
+ln -sf $PWD/.zshrc $HOME/.zshrc
+ln -sf $PWD/.zsh_plugins.txt $HOME/.zsh_plugins.txt
+
+# iterm colors
+sudo tic -x -o $HOME/.terminfo terminfo-24bit.src
