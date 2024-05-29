@@ -8,5 +8,13 @@ ln -sf $PWD/.vimrc $HOME/.vimrc
 ln -sf $PWD/.zshrc $HOME/.zshrc
 ln -sf $PWD/.zsh_plugins.txt $HOME/.zsh_plugins.txt
 
+# ssh config files
+ln -sf $PWD/.ssh/config $HOME/.ssh/config
+ln -sf $PWD/.ssh/id_rsa_vagov.pub $HOME/.ssh/id_rsa_vagov.pub
+ln -sf $PWD/.ssh/personal-ssh-config $HOME/.ssh/personal-ssh-config
+ln -sf $PWD/.ssh/personal-ssh-key.pub $HOME/.ssh/personal-ssh-key.pub
+ln -sf $PWD/.ssh/tw-ssh-config $HOME/.ssh/tw-ssh-config
+ln -sf $PWD/.ssh/tw-ssh-key.pub $HOME/.ssh/tw-ssh-key.pub
+
 # iterm colors
 sudo tic -x -o $HOME/.terminfo terminfo-24bit.src
