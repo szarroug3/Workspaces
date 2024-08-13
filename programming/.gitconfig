@@ -1,6 +1,6 @@
-[includeIf "gitdir:~/Git/personal/"]
+[includeIf "gitdir:~/git/personal/"]
 	path = ~/.gitconfig-personal
-[includeIf "gitdir:~/Git/work/"]
+[includeIf "gitdir:~/git/work/"]
 	path = ~/.gitconfig-work
 [core]
     excludesfile = ~/.gitignore
@@ -10,3 +10,5 @@
 [user]
 	name = Samreen Zarroug
 	email = samreen.zarroug@thoughtworks.com
+[init]
+	templatedir = /Users/samreenzarroug/.git-templates

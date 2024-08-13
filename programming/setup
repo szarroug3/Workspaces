@@ -19,5 +19,8 @@ ln -sf $PWD/.ssh/tw-ssh-key.pub $HOME/.ssh/tw-ssh-key.pub
 ln -sf $PWD/.vim $HOME/.vim
 ln -sf $PWD/.vimrc $HOME/.vimrc
 
+# bin
+ln -sf $PWD/bin $HOME/bin
+
 # iterm colors
 sudo tic -x -o $HOME/.terminfo terminfo-24bit.src

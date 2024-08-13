@@ -77,7 +77,7 @@ alias kg='kubectl get'
 alias kdeleteforce='kubectl delete --force --grace-period=0'
 
 # aws
-alias mfa='source /Users/samreenzarroug/Git/work/VA/mfa Samreen.Zarroug $(op item get --account my.1password.com --vault "Personal" --otp "Amazonaws-us-gov")'
+alias mfa='source ~/bin/mfa Samreen.Zarroug $(op item get --account my.1password.com --vault "Personal" --otp "Amazonaws-us-gov")'
 
 # random things
 alias talisman="$HOME/.talisman/bin/talisman_darwin_amd64"
@@ -85,18 +85,20 @@ alias vets="$HOME/bin/run-va.sh $"
 
 # environment variables
 export TERM="xterm"
-export PATH=$PATH:/opt/homebrew/bin
+export PATH=/opt/homebrew/bin:$PATH
+export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/.rbenv/bin
 export TALISMAN_HOME="$HOME/.talisman/bin"
 export PATH="$HOME/.jenv/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 
 # smartcache eval jenv init -
-# smartcache eval rbenv init - zsh
-# smartcache eval pyenv init - zsh
-# eval "$(op completion zsh)"; compdef _op op
+smartcache eval rbenv init - zsh
+smartcache eval pyenv init - zsh
+eval "$(op completion zsh)"; compdef _op op
 source <(docker completion zsh)
 
 autoload -U +X bashcompinit && bashcompinit
@@ -105,3 +107,6 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$PATH:/Users/samreenzarroug/.local/bin"
+
