@@ -1,5 +1,5 @@
 # setup antidote
-source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+source ~/.antidote/antidote.zsh
 # source <(antidote init)
 
 # Path to your oh-my-zsh installation.
@@ -68,6 +68,12 @@ alias gnb='f() { git fetch origin main && git checkout -b $1 origin/main }; f'
 alias gfb='git fetch origin main && git rebase -i origin/main'
 alias grhc='git reset --hard && git clean -d -f'
 
+# gh aliases
+alias gwr='gh workflow run'
+alias gwv='gh workflow view'
+alias gwvl='f() { gh run list --workflow "$1" --limit 1 --json databaseId --jq ".[] | .databaseId" | xargs gh run view --log; }; f'
+alias gwvlp='f() { until gwvl "$1" | grep -v "is still in progress; logs will be available when it is complete"; do sleep 10; done }; f'
+
 # hub aliases
 alias hppm='hub pull-request -p -m "$(git log --format=%B -n 1)"'
 
@@ -77,9 +83,10 @@ alias kg='kubectl get'
 alias kdeleteforce='kubectl delete --force --grace-period=0'
 
 # aws
-alias mfa='source ~/bin/mfa Samreen.Zarroug $(op item get --account my.1password.com --vault "Personal" --otp "Amazonaws-us-gov")'
+alias mfa='source ~/bin/mfa Samreen.Zarroug $(op item get --account my.1password.com --vault "Work" --otp "Amazonaws-us-gov")'
 
 # random things
+alias op="/mnt/c/Users/szarr/AppData/Local/Microsoft/WinGet/Packages/AgileBits.1Password.CLI_Microsoft.Winget.Source_8wekyb3d8bbwe/op.exe"
 alias talisman="$HOME/.talisman/bin/talisman_darwin_amd64"
 alias vets="$HOME/bin/run-va.sh $"
 
@@ -89,6 +96,7 @@ export PATH=/opt/homebrew/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/.rbenv/bin
+export PATH=$PATH:$HOME/bin
 export TALISMAN_HOME="$HOME/.talisman/bin"
 export PATH="$HOME/.jenv/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
@@ -96,7 +104,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export NVM_DIR="$HOME/.nvm"
 
 # smartcache eval jenv init -
-smartcache eval rbenv init - zsh
+# smartcache eval rbenv init - zsh
 smartcache eval pyenv init - zsh
 eval "$(op completion zsh)"; compdef _op op
 source <(docker completion zsh)
@@ -110,3 +118,5 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$PATH:/Users/samreenzarroug/.local/bin"
 
+
+. "$HOME/.local/bin/env"
