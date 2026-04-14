@@ -11,3 +11,7 @@ Gemfile.lock
 __pycache__
 .docker
 .flake8
+
+# AI
+.cursor
+.claude

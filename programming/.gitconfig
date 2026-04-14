@@ -1,3 +1,6 @@
+[user]
+	name = Samreen Zarroug
+	email = samreen.zarroug@thoughtworks.com
 [includeIf "gitdir:~/git/personal/"]
 	path = ~/.gitconfig-personal
 [includeIf "gitdir:~/git/work/"]
@@ -7,8 +10,6 @@
 
 [credential]
 	helper = cache --timeout=600
-[user]
-	name = Samreen Zarroug
-	email = samreen.zarroug@thoughtworks.com
 [init]
 	templatedir = /Users/samreenzarroug/.git-templates
+	defaultBranch = main

@@ -1,5 +1,5 @@
 # setup antidote
-source ~/.antidote/antidote.zsh
+source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
 # source <(antidote init)
 
 # Path to your oh-my-zsh installation.
@@ -59,13 +59,14 @@ alias drmi='docker rmi $(docker images -q)'
 # git aliases
 alias glfp='git log --first-parent --no-merges'
 alias gcane='git commit --amend --no-edit'
-alias gcan!='git commit --amend --no-edit -a'
+alias gcan!='git add -u && git commit --amend --no-edit -a'
 alias gcfb='git cat-file blob'
 alias grlp='git reflog --pretty=fuller'
 alias grm='git fetch origin main && git reset --hard origin/main'
 alias gbda='git branch | grep -v "main" | grep -v "master" | xargs git branch -D'
 alias gnb='f() { git fetch origin main && git checkout -b $1 origin/main }; f'
 alias gfb='git fetch origin main && git rebase -i origin/main'
+alias gfco='f() { git fetch origin $1 && git checkout -b $1 origin/$1 }; f'
 alias grhc='git reset --hard && git clean -d -f'
 
 # gh aliases
@@ -73,9 +74,6 @@ alias gwr='gh workflow run'
 alias gwv='gh workflow view'
 alias gwvl='f() { gh run list --workflow "$1" --limit 1 --json databaseId --jq ".[] | .databaseId" | xargs gh run view --log; }; f'
 alias gwvlp='f() { until gwvl "$1" | grep -v "is still in progress; logs will be available when it is complete"; do sleep 10; done }; f'
-
-# hub aliases
-alias hppm='hub pull-request -p -m "$(git log --format=%B -n 1)"'
 
 # kubectl
 alias kd='kubectl describe'
@@ -86,16 +84,15 @@ alias kdeleteforce='kubectl delete --force --grace-period=0'
 alias mfa='source ~/bin/mfa Samreen.Zarroug $(op item get --account my.1password.com --vault "Work" --otp "Amazonaws-us-gov")'
 
 # random things
-alias op="/mnt/c/Users/szarr/AppData/Local/Microsoft/WinGet/Packages/AgileBits.1Password.CLI_Microsoft.Winget.Source_8wekyb3d8bbwe/op.exe"
-alias talisman="$HOME/.talisman/bin/talisman_darwin_amd64"
+# alias talisman="$HOME/.talisman/bin/talisman_darwin_amd64"
 alias vets="$HOME/bin/run-va.sh $"
+alias chatbot="osascript ~/bin/run_chatbot.scpt"
 
 # environment variables
 export TERM="xterm"
 export PATH=/opt/homebrew/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/.rbenv/bin
+export PATH=$PATH:$HOME/.rbenv
 export PATH=$PATH:$HOME/bin
 export TALISMAN_HOME="$HOME/.talisman/bin"
 export PATH="$HOME/.jenv/bin:$PATH"
@@ -104,9 +101,10 @@ export PYENV_ROOT="$HOME/.pyenv"
 export NVM_DIR="$HOME/.nvm"
 
 # smartcache eval jenv init -
-# smartcache eval rbenv init - zsh
-smartcache eval pyenv init - zsh
+smartcache eval rbenv init - zsh
+# smartcache eval pyenv init - zsh
 eval "$(op completion zsh)"; compdef _op op
+eval "$(uv generate-shell-completion bash)"
 source <(docker completion zsh)
 
 autoload -U +X bashcompinit && bashcompinit
@@ -116,7 +114,18 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH="$PATH:/Users/samreenzarroug/.local/bin"
+# pnpm
+export PNPM_HOME="/Users/samreenzarroug/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
 
-
-. "$HOME/.local/bin/env"
+# functions
+hppm() {
+  local base_branch="${1:-main}"
+  gh pr create \
+    --base "$base_branch" \
+    --fill                    # uses commit message for title/body automatically
+}
