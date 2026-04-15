@@ -6,10 +6,8 @@
 [includeIf "gitdir:~/git/work/"]
 	path = ~/.gitconfig-work
 [core]
-    excludesfile = ~/.gitignore
-
+	excludesfile = ~/.gitignore
 [credential]
 	helper = cache --timeout=600
 [init]
-	templatedir = /Users/samreenzarroug/.git-templates
 	defaultBranch = main

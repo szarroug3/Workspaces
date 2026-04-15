@@ -1,0 +1,12 @@
+[user]
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ5yLXzA0oaFZntAP8xGtokLxIQke0BLJd0TisJDKlEM
+	name = Samreen Zarroug
+	email = szarroug3@gmail.com
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
+[core]
+	sshCommand = ssh -F ~/.ssh/personal-ssh-config
+[include]
+	path = ~/.gitconfig-signer

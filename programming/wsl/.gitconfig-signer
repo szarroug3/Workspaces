@@ -1,0 +1,2 @@
+[gpg "ssh"]
+	program = /mnt/c/Users/szarr/AppData/Local/Microsoft/WindowsApps/op-ssh-sign.exe

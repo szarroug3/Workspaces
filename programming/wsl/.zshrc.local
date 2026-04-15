@@ -1,0 +1,11 @@
+# WSL-specific zsh config, sourced at end of shared/.zshrc.
+
+# 1Password SSH agent bridge (Windows → WSL)
+# Relies on npiperelay.exe at C:\tools\npiperelay.exe
+export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+if ! ss -a 2>/dev/null | grep -q "$SSH_AUTH_SOCK"; then
+  rm -f "$SSH_AUTH_SOCK"
+  (setsid socat UNIX-LISTEN:"$SSH_AUTH_SOCK",fork,mode=600 \
+    EXEC:"/mnt/c/tools/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork \
+    &) >/dev/null 2>&1
+fi
