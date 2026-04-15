@@ -11,3 +11,5 @@
 	helper = cache --timeout=600
 [init]
 	defaultBranch = main
+[include]
+	path = ~/.gitconfig.local
