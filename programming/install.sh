@@ -28,26 +28,33 @@ echo "Installing dotfiles for platform: $PLATFORM"
 echo "Repo: $REPO"
 echo
 
-# link $1 (abs) -> $HOME/$2, backing up any existing file/link
+# link $1 (abs) -> $HOME/$2, backing up any existing file/link.
+# Uniqueness via PID to avoid same-second .bak collisions across calls.
 link() {
   local src="$1"
   local rel="$2"
   local dest="$HOME/$rel"
   mkdir -p "$(dirname "$dest")"
-  if [[ -e "$dest" || -L "$dest" ]]; then
-    if [[ "$(readlink "$dest" 2>/dev/null || true)" == "$src" ]]; then
-      return 0
-    fi
-    mv "$dest" "$dest.bak.$(date +%s)"
+
+  # Already correct? skip.
+  if [[ -L "$dest" && "$(readlink "$dest" 2>/dev/null)" == "$src" ]]; then
+    return 0
   fi
+
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    local bak="$dest.bak.$(date +%Y%m%d-%H%M%S)-$$"
+    while [[ -e "$bak" ]]; do bak="$bak.$RANDOM"; done
+    mv "$dest" "$bak"
+  fi
+
   ln -s "$src" "$dest"
   echo "  $rel -> $src"
 }
 
 # Apply a source dir to $HOME:
-#   - .ssh/* is merged (each file is linked individually)
-#   - bin, .vim are linked as whole directories
-#   - everything else is linked by its top-level name
+#   - .ssh/ and bin/ are MERGED (each file linked individually) so shared+platform combine
+#   - .vim is linked as a whole directory
+#   - everything else is linked by its top-level name (platform overrides shared)
 apply() {
   local base="$1"
   [[ -d "$base" ]] || return 0
@@ -56,11 +63,11 @@ apply() {
     [[ -e "$entry" ]] || continue
     local name="$(basename "$entry")"
     case "$name" in
-      .ssh)
+      .ssh|bin)
         # merge contents
-        for sshfile in "$entry"/.[!.]* "$entry"/*; do
-          [[ -e "$sshfile" ]] || continue
-          link "$sshfile" ".ssh/$(basename "$sshfile")"
+        for child in "$entry"/.[!.]* "$entry"/*; do
+          [[ -e "$child" ]] || continue
+          link "$child" "$name/$(basename "$child")"
         done
         ;;
       terminfo-24bit.src)
