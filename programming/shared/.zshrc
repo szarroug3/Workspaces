@@ -20,7 +20,9 @@ if [[ -f "$ANTIDOTE_HOME/antidote.zsh" ]]; then
   mkdir -p "$ZSH_CACHE_DIR/completions"
   export NVM_LAZY_LOAD=true
   export NVM_COMPLETION=true
-  export NVM_AUTO_USE=true
+  # NVM_AUTO_USE=true defeats lazy-load (runs nvm_auto on every shell start,
+  # which fully sources nvm.sh — ~1s). Leave it off; run `nvm use` manually
+  # or add a chpwd hook if you want per-directory auto-switching.
   [[ -f "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
   autoload -Uz compinit && compinit
   antidote load "$HOME/.zsh_plugins.txt"
@@ -108,20 +110,83 @@ export NVM_DIR="$HOME/.nvm"
 
 # rbenv / completions
 command -v smartcache >/dev/null && command -v rbenv >/dev/null && smartcache eval rbenv init - zsh
-command -v op >/dev/null && eval "$(op completion zsh)" && compdef _op op
-command -v uv >/dev/null && eval "$(uv generate-shell-completion bash)"
-command -v docker >/dev/null && source <(docker completion zsh)
+
+# Cache shell-completion scripts on disk — regenerating them on every shell
+# start was costing ~150–200ms. Regenerates when the tool's binary is newer
+# than the cache, so updates are picked up automatically.
+ZSH_COMPLETION_CACHE="$HOME/.cache/zsh-completions"
+[[ -d "$ZSH_COMPLETION_CACHE" ]] || mkdir -p "$ZSH_COMPLETION_CACHE"
+_cached_completion() {
+  local cmd="$1"; shift
+  local bin; bin="$(command -v "$cmd" 2>/dev/null)" || return 0
+  local cache="$ZSH_COMPLETION_CACHE/$cmd.zsh"
+  if [[ ! -s "$cache" || "$bin" -nt "$cache" ]]; then
+    "$cmd" "$@" >| "$cache" 2>/dev/null || { rm -f "$cache"; return 0; }
+  fi
+  source "$cache"
+}
+_cached_completion op completion zsh && compdef _op op
+_cached_completion uv generate-shell-completion zsh
+_cached_completion docker completion zsh
 
 autoload -U +X bashcompinit && bashcompinit
 [[ -x /usr/local/bin/terraform ]] && complete -o nospace -C /usr/local/bin/terraform terraform
 
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# NOTE: don't source $NVM_DIR/nvm.sh here — the zsh-nvm plugin (loaded via
+# antidote) handles lazy-loading. Sourcing nvm.sh directly loads the full
+# ~1.5k-line script at every shell start and defeats NVM_LAZY_LOAD.
+
+# Auto `nvm use` on cd into a directory with an .nvmrc (walks up to find it).
+# Cheap parent-walk avoids forcing nvm.sh to load in non-node dirs; only calls
+# `nvm` when an .nvmrc is actually found, which triggers the lazy-load shim.
+autoload -U add-zsh-hook
+_nvmrc_autoload() {
+  local dir="$PWD" nvmrc=""
+  while [[ -n "$dir" ]]; do
+    if [[ -f "$dir/.nvmrc" ]]; then nvmrc="$dir/.nvmrc"; break; fi
+    [[ "$dir" == "/" || "$dir" == "$HOME" ]] && break
+    dir="${dir:h}"
+  done
+  [[ -z "$nvmrc" || "$nvmrc" == "${_NVMRC_LAST-}" ]] && return
+  _NVMRC_LAST="$nvmrc"
+  nvm use >/dev/null
+}
+add-zsh-hook chpwd _nvmrc_autoload
+# Run once so shells started inside a project (e.g. tmux panes) pick up the
+# right node version.
+_nvmrc_autoload
 
 # ---------- functions ----------
 hppm() {
   local base_branch="${1:-main}"
   gh pr create --base "$base_branch" --fill
+}
+
+# ---------- 1Password secret helpers ----------
+# `op run` resolves op:// references in an env-file and injects them into a
+# single child process — secrets never live in the shell environment. The
+# biometric unlock happens once per `op` session (~30 min default).
+
+tf-azure-gov() {
+  op run --env-file="$HOME/.config/envs/azure-gov.env" -- terraform "$@"
+}
+
+tf-azure-commercial() {
+  # TF_VAR_bot_data embeds the commercial microsoft_app_id; build it at call
+  # time from 1Password so the secret isn't written into an env file.
+  local app_id
+  app_id=$(op read 'op://Work/azure-commercial/microsoft_app_id') || return
+  TF_VAR_bot_data="{ auth=\"$app_id\" }" \
+    op run --env-file="$HOME/.config/envs/azure-commercial.env" -- terraform "$@"
+}
+
+# Export Sidekiq Enterprise creds into the current shell — needed for
+# `bundle install` since bundler reads BUNDLE_ENTERPRISE__CONTRIBSYS__COM
+# directly from env. Only run this in shells where you're actually doing
+# bundle work.
+load-bundler-creds() {
+  export BUNDLE_ENTERPRISE__CONTRIBSYS__COM="$(op read 'op://Work/sidekiq-enterprise/credentials')" \
+    && echo "BUNDLE_ENTERPRISE__CONTRIBSYS__COM loaded into this shell"
 }
 
 # ---------- end ----------
